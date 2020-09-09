@@ -21,7 +21,8 @@
      && !defined(__sun) && !defined(__SVR4)\
      && !(defined __MINGW64__) && !(defined __ANDROID__))\
      && !defined(__CYGWIN__) && !defined(__EMSCRIPTEN__)\
-     && !defined(__RISCV__) && !defined(__hexagon__)
+     && !defined(__RISCV__) && !defined(__hexagon__) \
+     && !defined(__wasm__)
   #ifndef DMLC_LOG_STACK_TRACE
   #define DMLC_LOG_STACK_TRACE 1
   #endif

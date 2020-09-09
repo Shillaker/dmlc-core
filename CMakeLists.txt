@@ -12,6 +12,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_LOCAL}/Modules)
 include(CheckCXXSymbolExists)
 include(cmake/Utils.cmake)
 
+option(DMLC_FAASM "Build DMLC for Faasm" ON)
+
 # Options
 dmlccore_option(USE_HDFS "Build with HDFS support" OFF)
 dmlccore_option(USE_AZURE "Build with AZURE support" OFF)
@@ -133,7 +135,14 @@ endif()
 include(CheckSymbolExists)
 include(CheckIncludeFile)
 include(CheckIncludeFileCXX)
-check_symbol_exists(fopen64 stdio.h DMLC_FOPEN_64_PRESENT)
+
+if(DMLC_FAASM)
+    set(DMLC_FOPEN_64_PRESENT 0)
+    set(DMLC_EXECINFO_H_PRESENT 0)
+else()
+    check_symbol_exists(fopen64 stdio.h DMLC_FOPEN_64_PRESENT)
+endif()
+
 check_include_file_cxx(cxxabi.h DMLC_CXXABI_H_PRESENT)
 check_symbol_exists(nanosleep time.h DMLC_NANOSLEEP_PRESENT)
 
