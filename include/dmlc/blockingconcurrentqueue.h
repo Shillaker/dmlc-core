@@ -32,7 +32,7 @@ extern "C" {
 }
 #elif defined(__MACH__)
 #include <mach/mach.h>
-#elif defined(__unix__)
+#elif defined(__wasm__) || defined(__unix__)
 #include <semaphore.h>
 #endif
 
@@ -170,7 +170,7 @@ namespace details
 				}
 			}
 		};
-#elif defined(__unix__)
+#elif defined(__unix__) || defined(__wasm__)
 		//---------------------------------------------------------
 		// Semaphore (POSIX, Linux)
 		//---------------------------------------------------------
