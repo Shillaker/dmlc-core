@@ -58,7 +58,11 @@ if(USE_AZURE)
   list(APPEND SOURCE "src/io/azure_filesys.cc")
 endif()
 
-add_library(dmlc ${SOURCE})
+if(DMLC_FAASM)
+    add_library(dmlc STATIC ${SOURCE})
+else()
+    add_library(dmlc ${SOURCE})
+endif()
 
 # Sanitizer
 if (DMLC_USE_SANITIZER)
@@ -193,6 +197,9 @@ if(MSVC)
     endforeach(flag_var)
   endif()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
+elseif(DMLC_FAASM)
+  # Compier options for Faasm build
+  target_compile_options(dmlc PRIVATE -Wall -Wno-unknown-pragmas -O3)
 else()
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)
   check_cxx_compiler_flag("-msse2" SUPPORT_MSSE2)
