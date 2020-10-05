@@ -58,10 +58,10 @@ if(USE_AZURE)
   list(APPEND SOURCE "src/io/azure_filesys.cc")
 endif()
 
-if(DMLC_FAASM)
-    add_library(dmlc STATIC ${SOURCE})
+if(BUILD_SHARED_LIBS)
+    add_library(dmlc SHARED ${SOURCE})
 else()
-    add_library(dmlc ${SOURCE})
+    add_library(dmlc STATIC ${SOURCE})
 endif()
 
 # Sanitizer
