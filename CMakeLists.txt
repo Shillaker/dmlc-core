@@ -161,13 +161,18 @@ else()
   set(DMLC_EXECINFO_H_PRESENT 0)
 endif()
 
-# Check endianness
-include(TestBigEndian)
-test_big_endian(BIG_ENDIAN)
-if(BIG_ENDIAN)
-  set(DMLC_CMAKE_LITTLE_ENDIAN 0)
-else()
+if(DMLC_FAASM)
+  # WebAssembly is little-endian
   set(DMLC_CMAKE_LITTLE_ENDIAN 1)
+else()
+  # Check endianness
+  include(TestBigEndian)
+  test_big_endian(BIG_ENDIAN)
+  if(BIG_ENDIAN)
+    set(DMLC_CMAKE_LITTLE_ENDIAN 0)
+  else()
+    set(DMLC_CMAKE_LITTLE_ENDIAN 1)
+  endif()
 endif()
 
 message(STATUS "${CMAKE_LOCAL}/build_config.h.in -> include/dmlc/build_config.h")
